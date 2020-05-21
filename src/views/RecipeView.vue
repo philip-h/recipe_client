@@ -38,13 +38,22 @@
       </p>
     </div>
 
-    <v-btn outlined color="deep-purple" class="mr-2"><v-icon left>mdi-heart</v-icon>Favourite</v-btn>
+    <v-btn 
+      :outlined="!favourited" 
+      :dark="favourited" 
+      color="deep-purple"
+      class="mr-2"
+      @click="favourite"
+    >
+      <v-icon left>mdi-heart</v-icon>Favourite
+    </v-btn>
     <!-- <v-btn outlined color="deep-purple" class="mr-2"><v-icon left>mdi-share-variant</v-icon>Share</v-btn> -->
   </div>
 </template>
 
 <script>
 import RecipeService from '@/services/RecipeService'
+import FavouriteService from '@/services/FavouriteService'
 
 export default {
   name: 'RecipeView',
@@ -54,11 +63,35 @@ export default {
       ingredients: [],
       instructions: [],
     },
+    favourited:  false
   }),
 
   created: async function() {
     const response =  await RecipeService.show(this.$route.params.id)
     this.recipe = response.data
+  },
+
+  mounted: async function() {
+    const response = await FavouriteService.show(this.$route.params.id);
+    if (response.data.length) {
+      this.favourited = true;
+    } else {
+      this.favourited = false;
+    }
+    
+  },
+
+
+  methods: {
+    favourite: async function() {
+      if (this.favourited) {
+        await FavouriteService.delete(this.$route.params.id);
+      } else {
+        await FavouriteService.post(this.$route.params.id);
+      }
+
+      this.favourited = !this.favourited;
+    }
   }
   
 }
