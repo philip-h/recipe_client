@@ -44,9 +44,10 @@ export default {
     favourite: async function() {
       if (this.favourited) {
         await FavouriteService.delete(this.recipe.id);
+        this.favourited = !this.favourited;
       } else {
         await FavouriteService.post(this.recipe.id);
-
+        this.favourited = !this.favourited;
       }
     }
   }

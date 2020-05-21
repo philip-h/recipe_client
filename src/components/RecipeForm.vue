@@ -87,7 +87,7 @@ export default {
         instructions: this.instructions_raw
       });
 
-      // this.$router.push({ name: 'Home' })
+      this.$router.push({ name: 'Home' })
     },
 
     update: function () {
