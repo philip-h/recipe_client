@@ -19,10 +19,23 @@ Vue.use(VueRouter)
     name: 'MyRecipes',
     component: () => import('../views/MyRecipes.vue')
   },{
+    path: '/recipe/:id',
+    name: 'RecipeView',
+    component: () => import('../views/RecipeView.vue')
+  },{
+    path: '/recipe/:id/edit',
+    name: 'RecipeEdit',
+    component: () => import('../views/RecipeEdit.vue')
+  },{
+    path: '/create',
+    name: 'RecipeCreate',
+    component: () => import('../views/RecipeCreate.vue')
+  },{
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
+
 ]
 
 const router = new VueRouter({
