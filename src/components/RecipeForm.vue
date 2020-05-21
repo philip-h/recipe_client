@@ -1,6 +1,6 @@
 <template>
   <div class="recipe-view" >
-    <h2 class="text-center">{{ usedfor | capitalize }} a Recipe</h2>
+    <h2 class="text-center display-1">{{ usedfor | capitalize }} a Recipe</h2>
     <v-form style="width: 100%">
       <v-text-field
         label="Image Url"
@@ -20,25 +20,71 @@
         v-model="recipe.recipeInfo.name"
       ></v-text-field>
 
-      <v-textarea
-        label="Ingredients"
-        name="ingredients"
-        type="text"
-        solo
-        color="deep-purple"
-        v-model="ingredients_raw"
-      ></v-textarea>
+      <h3 class="headline"><v-icon class="mr-5">mdi-shaker-outline</v-icon>Ingredients</h3>    
+      <v-divider class="mb-5"></v-divider>
 
-      <v-textarea
-        label="Instructions"
-        name="instructions"
-        type="text"
-        solo
-        color="deep-purple"
-        v-model="instructions_raw"
-      ></v-textarea>
-        <v-btn outlined block color="deep-purple" v-if="usedfor == 'create'" @click="create">{{ usedfor }}</v-btn>
-        <v-btn outlined block color="deep-purple" v-if="usedfor == 'update'" @click="update">{{ usedfor }}</v-btn>
+      <v-card class="mb-5 pa-2">
+        <div class= "d-flex align-center" v-for="(ingredient, index) of recipe.ingredients" :key="index">
+          <v-text-field
+            label="Amount"
+            v-model="ingredient.amount"
+          >
+          </v-text-field>  
+          <v-text-field
+            label="Unit"
+            v-model="ingredient.unit"
+          >
+          </v-text-field>  
+            <div class="mr-2 ml-2"> of </div>
+          <v-text-field
+            label="Ingredient"
+            v-model="ingredient.ingredient"
+            @keyup.enter="addIngredient"
+          >
+          </v-text-field>  
+          <v-btn icon @click="removeIngredient(index)"><v-icon>mdi-close</v-icon></v-btn>
+        </div>
+        <v-btn icon @click="addIngredient()"><v-icon>mdi-plus</v-icon></v-btn>
+      </v-card>
+
+
+      <h3 class="headline"><v-icon class="mr-5">mdi-format-list-numbered</v-icon>Instructions</h3>    
+      <v-divider class="mb-5"></v-divider>
+
+
+      <v-card class="mb-5 pa-2">
+        <ol >
+          <li v-for="(instruction, index) of recipe.instructions" :key="index">
+            <div class="d-flex align-center">
+              <v-text-field
+                label="Description"
+                v-model="instruction.step_description"
+                @keyup.enter="addInstruction"
+                ></v-text-field>
+                <v-btn icon @click="removeIngredient(index)"><v-icon>mdi-close</v-icon></v-btn>
+            </div>
+          </li>
+        </ol>
+        <v-btn icon @click="addInstruction"><v-icon>mdi-plus</v-icon></v-btn>
+        </v-card>
+        <v-btn 
+          outlined 
+          block 
+          color="deep-purple" 
+          v-if="usedfor == 'create'" 
+          @click="create"
+        >
+          {{ usedfor }}
+        </v-btn>
+        <v-btn 
+          outlined 
+          block 
+          color="deep-purple" 
+          v-if="usedfor == 'update'" 
+          @click="update"
+        >
+          {{ usedfor }}
+        </v-btn>
 
     </v-form>
   </div>
@@ -62,53 +108,53 @@ export default {
   data: () => ({
     recipe: {
       recipeInfo: {},
-      ingredients: [],
-      instructions: []
-    },
-    ingredients_raw: "",
-    instructions_raw: ""
+      ingredients: [{
+        amount: "",
+        unit: "",
+        ingredient: ""
+      }],
+      instructions: [{
+        step_description: ""
+      }]
+    }
   }),
 
   created: async function() {
     if (this.usedfor == "update") {
       let response = await RecipeService.show(this.$route.params.id)
       this.recipe = response.data;
-
-      this.ingredients_raw = this.arrayToString(this.recipe.ingredients);
-      this.instructions_raw = this.arrayToString(this.recipe.instructions);
     }
   },
 
   methods: {
     create:function () {
       RecipeService.post({
-        recipeInfo: this.recipe.recipeInfo,
-        ingredients: this.ingredients_raw,
-        instructions: this.instructions_raw
-      });
+        recipe: this.recipe
+      })
 
-      this.$router.push({ name: 'Home' })
+      // this.$router.push({ name: 'Home' })
     },
 
     update: function () {
       
     },
 
-    arrayToString: function(arr) {
-      let str = "";
-
-      for (const row of arr){
-        for (const key in row) {
-          if (row.hasOwnProperty(key)) {
-            str += `${row[key]} `;
-          }
-        }
-        str += "\n";
-      }
-
-      return str;
+    addIngredient: function() {
+      this.recipe.ingredients.push({amount: "", unit: "", ingredient: ""})
     },
-  }
 
+    removeIngredient: function(index) {
+      this.recipe.ingredients.splice(index, 1);
+    },
+
+    addInstruction: function() {
+      this.recipe.instructions.push({ step_description: "" })
+    },
+
+    removeInstruction: function(index) {
+      this.recipe.instructions.splice(index, 1);
+    }
+    
+  }
 }
 </script>

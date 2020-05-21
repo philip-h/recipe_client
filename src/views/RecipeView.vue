@@ -12,7 +12,7 @@
       <!-- <v-chip outlined color="deep-purple" class="ma-2" v-for="tag in recipe.tags" :key="tag">{{ tag }}</v-chip> -->
     <!-- </div> -->
 
-    <h3><v-icon class="mr-5">mdi-shaker-outline</v-icon>Ingredients</h3>    
+    <h3 class="headline"><v-icon class="mr-5">mdi-shaker-outline</v-icon>Ingredients</h3>    
     <v-divider class="mb-5"></v-divider>
     <div class="ingredients mb-5">
       <v-list>
@@ -23,7 +23,7 @@
       </v-list>
     </div>
 
-    <h3><v-icon class="mr-5">mdi-format-list-numbered</v-icon>Directions</h3>    
+    <h3 class="headline"><v-icon class="mr-5">mdi-format-list-numbered</v-icon>Instructions</h3>    
     <v-divider class="mb-5"></v-divider>
     <div class="mb-5">
       <p>
@@ -39,7 +39,7 @@
     </div>
 
     <v-btn outlined color="deep-purple" class="mr-2"><v-icon left>mdi-heart</v-icon>Favourite</v-btn>
-    <v-btn outlined color="deep-purple" class="mr-2"><v-icon left>mdi-share-variant</v-icon>Share</v-btn>
+    <!-- <v-btn outlined color="deep-purple" class="mr-2"><v-icon left>mdi-share-variant</v-icon>Share</v-btn> -->
   </div>
 </template>
 
