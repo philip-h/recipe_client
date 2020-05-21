@@ -11,14 +11,14 @@
       grow
       app
     >
-    <v-btn :to="{ name: 'Recents' }">
-        <span>Recents</span>
-        <v-icon>mdi-history</v-icon>
-      </v-btn>
-
       <v-btn :to="{name: 'Home'}" exact>
         <span>Browse</span>
         <v-icon>mdi-earth</v-icon>
+      </v-btn>
+
+      <v-btn :to="{ name: 'RecipeCreate' }">
+        <span>Create</span>
+        <v-icon>mdi-plus-circle</v-icon>
       </v-btn>
 
       <v-btn :to="{ name: 'MyRecipes' }">

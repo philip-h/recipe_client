@@ -76,7 +76,6 @@ export default {
 
       this.ingredients_raw = this.arrayToString(this.recipe.ingredients);
       this.instructions_raw = this.arrayToString(this.recipe.instructions);
-      console.log(this.ingredients_raw)
     }
   },
 
@@ -88,7 +87,7 @@ export default {
         instructions: this.instructions_raw
       });
 
-      this.$router.push({ name: 'Home' })
+      // this.$router.push({ name: 'Home' })
     },
 
     update: function () {
