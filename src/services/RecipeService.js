@@ -11,6 +11,10 @@ export default {
 
   post(recipeData) {
     Api().post('recipes', recipeData)
+  },
+
+  put(id, recipeData) {
+    Api().put(`recipes/${id}`, recipeData)
   }
 
 

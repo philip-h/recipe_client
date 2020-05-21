@@ -38,7 +38,7 @@
             <div class="mr-2 ml-2"> of </div>
           <v-text-field
             label="Ingredient"
-            v-model="ingredient.ingredient"
+            v-model="ingredient.name"
             @keyup.enter="addIngredient"
           >
           </v-text-field>  
@@ -111,7 +111,7 @@ export default {
       ingredients: [{
         amount: "",
         unit: "",
-        ingredient: ""
+        name: ""
       }],
       instructions: [{
         step_description: ""
@@ -132,15 +132,18 @@ export default {
         recipe: this.recipe
       })
 
-      // this.$router.push({ name: 'Home' })
+      this.$router.push({ name: 'Home' })
     },
 
     update: function () {
+      RecipeService.put(this.$route.params.id, {
+        recipe: this.recipe
+      })
       
     },
 
     addIngredient: function() {
-      this.recipe.ingredients.push({amount: "", unit: "", ingredient: ""})
+      this.recipe.ingredients.push({amount: "", unit: "", name: ""})
     },
 
     removeIngredient: function(index) {
