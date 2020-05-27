@@ -121,24 +121,33 @@ export default {
 
   created: async function() {
     if (this.usedfor == "update") {
-      let response = await RecipeService.show(this.$route.params.id)
+      const response = await RecipeService.show(this.$route.params.id)
       this.recipe = response.data;
     }
   },
 
   methods: {
-    create:function () {
-      RecipeService.post({
+    create: async function () {
+      this.recipe.recipeInfo.username = this.$store.state.username
+
+      const response = await RecipeService.post({
         recipe: this.recipe
       })
 
-      this.$router.push({ name: 'Home' })
+      const recipeId = response.data.recipeId;
+
+      this.$router.push({ name: 'RecipeView', params: { id: recipeId }})
     },
 
     update: function () {
+      this.recipe.recipeInfo.username = this.$store.state.username
+
       RecipeService.put(this.$route.params.id, {
         recipe: this.recipe
       })
+
+      this.$router.push({ name: 'RecipeView', params: { id: this.$route.params.id }})
+
       
     },
 

@@ -2,11 +2,16 @@
   <div class="recipe-view" >
     <v-img :src="recipe.recipeInfo.image_url"></v-img>
 
-    <div class="d-flex justify-space-between align-center mb-5">
-      <h2 >{{ recipe.recipeInfo.name }} </h2>
-      <!-- only if you are logged in -->
-      <v-btn v-if="$store.state.isUserLoggedIn" text color="deep-purple" to="edit">Edit</v-btn>
+    <div class="d-flex justify-space-between align-center">
+      <h2 class="display-1">{{ recipe.recipeInfo.name }} </h2>
+      <v-btn 
+        v-if="$store.state.isUserLoggedIn && $store.state.username === recipe.recipeInfo.username" 
+        text color="deep-purple" to="edit"
+      >
+        Edit
+      </v-btn>
     </div>  
+    <h4 class="subtitle-1 mb-5">By {{ recipe.recipeInfo.username }}</h4>
 
     <!-- <div class="mb-5"> -->
       <!-- <v-chip outlined color="deep-purple" class="ma-2" v-for="tag in recipe.tags" :key="tag">{{ tag }}</v-chip> -->
@@ -44,6 +49,7 @@
       color="deep-purple"
       class="mr-2"
       @click="favourite"
+      v-if="$store.state.isUserLoggedIn"
     >
       <v-icon left>mdi-heart</v-icon>Favourite
     </v-btn>
@@ -72,11 +78,16 @@ export default {
   },
 
   mounted: async function() {
-    const response = await FavouriteService.show(this.$route.params.id);
-    if (response.data.length) {
-      this.favourited = true;
-    } else {
-      this.favourited = false;
+    if (this.$store.state.isUserLoggedIn) {
+      const response = await FavouriteService.show(
+          this.$route.params.id,
+          {username: this.$store.state.username}
+      );
+      if (response.data.length) {
+        this.favourited = true;
+      } else {
+        this.favourited = false;
+      }
     }
     
   },

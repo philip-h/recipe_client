@@ -5,16 +5,20 @@ export default {
     return Api().get('/recipes')
   },
 
+  indexByUsername(username) {
+    return Api().post('/myrecipes',username)
+  },
+
   show(id) {
-    return Api().get(`recipes/${id}`)
+    return Api().get(`/recipes/${id}`)
   },
 
   post(recipeData) {
-    Api().post('recipes', recipeData)
+    return Api().post('/recipes', recipeData)
   },
 
   put(id, recipeData) {
-    Api().put(`recipes/${id}`, recipeData)
+    Api().put(`/recipes/${id}`, recipeData)
   }
 
 

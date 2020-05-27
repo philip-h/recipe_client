@@ -8,6 +8,7 @@
     </router-link>
 
       <v-card-title>{{ recipe.name }}</v-card-title>
+      <v-card-subtitle>By {{ recipe.username }}</v-card-subtitle>
 
     <v-card-actions>
       <v-chip outlined color="deep-purple" class="ma-2" v-for="tag in recipe.tags" :key="tag">{{ tag }}</v-chip>
@@ -38,14 +39,19 @@ export default {
   }),
 
   mounted: async function() {
-    const response = await FavouriteService.show(this.recipe.id);
-    if (response.data.length) {
-      this.favourited = true;
-    } else {
-      this.favourited = false;
+    if (this.$store.state.isUserLoggedIn){
+      const response = await FavouriteService.show(
+        this.recipe.id, 
+        {username: this.$store.state.username}
+      )
+
+      if (response.data.length) {
+        this.favourited = true;
+      } else {
+        this.favourited = false;
+      }
     }
-    
-  },
+},
 
   methods: {
     favourite: async function() {
