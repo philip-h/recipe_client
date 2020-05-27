@@ -12,7 +12,14 @@
     <v-card-actions>
       <v-chip outlined color="deep-purple" class="ma-2" v-for="tag in recipe.tags" :key="tag">{{ tag }}</v-chip>
       <v-spacer></v-spacer>
-      <v-btn icon :color="favourited ? 'deep-purple' : undefined" @click="favourite"><v-icon>mdi-heart</v-icon></v-btn>
+      <v-btn 
+        icon 
+        :color="favourited ? 'deep-purple' : undefined" 
+        @click="favourite"
+        v-if="$store.state.isUserLoggedIn"
+      >
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
       <!-- <v-btn icon><v-icon>mdi-share-variant</v-icon></v-btn> -->
     </v-card-actions>
   </v-card>
