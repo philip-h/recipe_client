@@ -31,6 +31,10 @@ Vue.use(VueRouter)
     name: 'RecipeCreate',
     component: () => import('../views/RecipeCreate.vue')
   },{
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
+  },{
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')

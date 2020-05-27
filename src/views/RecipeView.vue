@@ -5,7 +5,7 @@
     <div class="d-flex justify-space-between align-center mb-5">
       <h2 >{{ recipe.recipeInfo.name }} </h2>
       <!-- only if you are logged in -->
-      <v-btn text color="deep-purple" to="edit">Edit</v-btn>
+      <v-btn v-if="$store.state.isUserLoggedIn" text color="deep-purple" to="edit">Edit</v-btn>
     </div>  
 
     <!-- <div class="mb-5"> -->
