@@ -59,7 +59,10 @@ export default {
         await FavouriteService.delete(this.recipe.id);
         this.favourited = !this.favourited;
       } else {
-        await FavouriteService.post(this.recipe.id);
+          await FavouriteService.post(
+              this.recipe.id,
+              {username: this.$store.state.username}
+          );
         this.favourited = !this.favourited;
       }
     }
