@@ -5,16 +5,16 @@ export default {
     return Api().post('/favourites/', username)
   },
 
-  show(id, username) {
-    return Api().post(`/favourites/${id}`, username)
+  show(recipe_id, username) {
+    return Api().post(`/favourites/${recipe_id}`, username)
   },
 
-  post(id) {
-    return Api().post(`/favourites/${id}`)
+  post(recipe_id, username) {
+    return Api().post(`/favourites/u/${recipe_id}`, username)
   },
 
-  delete(id) {
-    return Api().delete(`/favourites/${id}`)
+  delete(recipe_id) {
+    return Api().delete(`/favourites/${recipe_id}`)
   },
 
 }
