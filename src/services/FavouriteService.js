@@ -1,16 +1,16 @@
 import Api from '@/services/Api'
 
 export default {
-  index(username) {
-    return Api().post('/favourites/', username)
+  index() {
+    return Api().get('/favourites/')
   },
 
-  show(recipe_id, username) {
-    return Api().post(`/favourites/${recipe_id}`, username)
+  show(recipe_id) {
+    return Api().get(`/favourites/${recipe_id}`)
   },
 
-  post(recipe_id, username) {
-    return Api().post(`/favourites/u/${recipe_id}`, username)
+  post(recipe_id) {
+    return Api().post(`/favourites/${recipe_id}`)
   },
 
   delete(recipe_id) {

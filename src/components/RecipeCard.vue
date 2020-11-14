@@ -42,7 +42,6 @@ export default {
     if (this.$store.state.isUserLoggedIn){
       const response = await FavouriteService.show(
         this.recipe.id, 
-        {username: this.$store.state.username}
       )
 
       if (response.data.length) {
@@ -60,8 +59,7 @@ export default {
         this.favourited = !this.favourited;
       } else {
           await FavouriteService.post(
-              this.recipe.id,
-              {username: this.$store.state.username}
+              this.recipe.id
           );
         this.favourited = !this.favourited;
       }
