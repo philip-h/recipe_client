@@ -19,6 +19,10 @@ export default {
 
   put(id, recipeData) {
     Api().put(`/recipes/${id}`, recipeData)
+  },
+
+  delete(id) {
+    Api().delete(`/recipes/${id}`)
   }
 
 

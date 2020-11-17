@@ -10,7 +10,10 @@
       >
         Edit
       </v-btn>
-    </div>  
+      <confirm-delete-recipe
+        v-if="$store.state.isUserLoggedIn && $store.state.username === recipe.recipeInfo.username"
+      ></confirm-delete-recipe>
+    </div>
     <h4 class="subtitle-1 mb-5">By {{ recipe.recipeInfo.username }}</h4>
 
     <!-- <div class="mb-5"> -->
@@ -60,9 +63,14 @@
 <script>
 import RecipeService from '@/services/RecipeService'
 import FavouriteService from '@/services/FavouriteService'
+import ConfirmDeleteRecipe from '@/components/ConfirmDeleteRecipe'
+
 
 export default {
   name: 'RecipeView',
+  components: {
+      ConfirmDeleteRecipe,
+  },
   data: () => ({
     recipe: {
       recipeInfo: {},
