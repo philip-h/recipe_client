@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <recipe-card v-for="recipe in recipes" :key="recipe.id" :recipe="recipe"></recipe-card>
+    <v-skeleton-loader
+      class="mx-auto"
+      type="card, card, card"
+      v-if="loading"
+    ></v-skeleton-loader>
+    <recipe-card v-if="!loading" v-for="recipe in recipes" :key="recipe.id" :recipe="recipe"></recipe-card>
   </div>
 </template>
 
@@ -19,8 +24,13 @@ export default {
     this.recipes = response.data
   },
 
+  mounted: function() {
+    this.loading = false
+  },
+
   data: () => ({
-    recipes: []
+    recipes: [],
+    loading: true
   }),
 }
 </script>
