@@ -23,8 +23,8 @@
           <router-link v-if="usedfor === 'login'" :to="{ name: 'Register' }">New? Register Here.</router-link>
           <router-link v-if="usedfor === 'register'" :to="{ name: 'Login' }">Have an account? Login Here.</router-link>
         </p>
-        <v-btn v-if="usedfor === 'login'" outlined block color="deep-purple" @click="login">Login</v-btn>
-        <v-btn v-if="usedfor === 'register'" outlined block color="deep-purple" @click="register">Register</v-btn>
+        <v-btn type="submit" v-if="usedfor === 'login'" outlined block color="deep-purple" @click="login">Login</v-btn>
+        <v-btn type="submit" v-if="usedfor === 'register'" outlined block color="deep-purple" @click="register">Register</v-btn>
     </v-form>
   </div>
 </template>
@@ -45,7 +45,8 @@ export default {
   }),
 
   methods: {
-    login: async function() {
+    login: async function(e) {
+      e.preventDefault()
       try {
         const response = await AuthenticationService.login({
           username: this.username,
