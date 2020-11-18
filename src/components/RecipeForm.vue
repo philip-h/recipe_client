@@ -36,12 +36,12 @@
           >
           </v-text-field>  
             <div class="mr-2 ml-2"> of </div>
-          <v-text-field
+          <v-combobox
             label="Ingredient"
+            :items="comboIngredients"
             v-model="ingredient.name"
-            @keyup.enter="addIngredient"
           >
-          </v-text-field>  
+          </v-combobox>
           <v-btn icon @click="removeIngredient(index)"><v-icon>mdi-close</v-icon></v-btn>
         </div>
         <v-btn icon @click="addIngredient()"><v-icon>mdi-plus</v-icon></v-btn>
@@ -92,6 +92,7 @@
 
 <script>
 import RecipeService from '@/services/RecipeService'
+import IngredientService from '@/services/IngredientService'
 export default {
   name: 'RecipeForm',
   props: {
@@ -116,19 +117,31 @@ export default {
       instructions: [{
         step_description: ""
       }]
-    }
+    },
+    comboIngredients: []
   }),
 
   created: async function() {
     if (this.usedfor == "update") {
       const response = await RecipeService.show(this.$route.params.id)
-      this.recipe = response.data;
+      this.recipe = response.data
     }
+
+    // Fetch ingredients from database
+    const response = await IngredientService.index()
+    const jsonIngredients = response.data
+    // Put into string array for combobox
+    for (let index in jsonIngredients) {
+      this.comboIngredients.push(jsonIngredients[index].name)
+    }
+
+    // Sort the ingredients for aesthetics
+    this.comboIngredients.sort()
   },
 
   methods: {
     create: async function () {
-      this.recipe.recipeInfo.username = this.$store.state.username
+/*      this.recipe.recipeInfo.username = this.$store.state.username
 
       const response = await RecipeService.post({
         recipe: this.recipe
@@ -137,7 +150,9 @@ export default {
       const recipeId = response.data.recipeId;
 
       this.$router.push({ name: 'RecipeView', params: { id: recipeId }})
-    },
+  */
+      console.log(this.recipe.ingredients)
+  },
 
     update: function () {
       this.recipe.recipeInfo.username = this.$store.state.username
